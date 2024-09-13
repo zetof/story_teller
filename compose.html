@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Mise en forme des personnages</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/compose.js"></script>
+</head>
+<body>
+    <div class="playground">
+        <canvas id="character" class="background"></canvas>
+    </div>
+    <textarea id="values" rows="6" cols="80" onmouseover="this.focus();this.select()">test</textarea>
+    <script>
+        const params = new URLSearchParams(window.location.search)
+        base_dir = params.has("base_dir")?params.get("base_dir"):"goldorak"
+        picture = params.has("picture")?params.get("picture"):"goldorak.gif"
+        var character = new CanvasImage("character", "values")
+        character.load(base_dir, picture)
+    </script>
+</body>
+</html>

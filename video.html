@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Setting up a moving character</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/video.js"></script>
+</head>
+<body>
+    <div id="main">
+    <div class="column">
+        <div class="playground">
+            <canvas id="movie" tabindex="1"></canvas>
+        </div>
+        <div class="infos"></div>
+    </div>
+</div>
+    <script>
+        const params = new URLSearchParams(window.location.search)
+        base_dir = params.has("base_dir")?params.get("base_dir"):"goldorak"
+        source = params.has("source")?params.get("source"):"golgoth.mp4"
+        target = params.has("target")?params.get("target"):"my_movie"
+        const video = new Video("stories/" + base_dir + "/" + source, target)
+    </script>
+</body>
+</html>

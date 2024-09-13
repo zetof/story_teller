@@ -1,0 +1,78 @@
+body {
+    background-color: black;
+}
+#main {
+	margin: auto;
+	text-align: center;
+	background-color: black;
+	height:100%;
+}
+div.row {
+	margin: auto;
+}
+div.column {
+	height: 850px;
+	width: 500px;
+	margin: auto;
+}
+div.copy {
+	width: 100%;
+	text-align: center;
+}
+div#tools {
+	display: block;
+	vertical-align: middle;
+	text-align: center;
+	height: 75px;
+    margin: 10px;
+}
+img.tool {
+	border: 2px solid transparent;
+	max-width: 50px;
+	max-height: 50px;
+	vertical-align: middle;
+	padding: 5px;
+	margin: 5px;
+	cursor: grab;
+	border-radius: 15px;
+}
+div.playground {
+	position: relative;
+	display: inline-block;
+    margin: 10px;
+	width: 500px;
+	height: 650px;
+}
+div.infos {
+	position: relative;
+	text-align: left;
+	font-family: monospace;
+    font-size: 10pt;
+    margin-left: 10px;
+	width: 500px;
+	height: 100px;
+	color: white;
+}
+canvas {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;	
+	background-color: transparent;
+ }
+canvas.background {
+    z-index: 0;	
+}
+canvas.foreground {
+    z-index: 1;
+}
+textarea {
+	vertical-align: top;
+    font-family: monospace;
+    font-size: 14pt; 
+    color: white;
+    margin: 10px;
+	padding: 10px;
+	background-color: black;
+}
