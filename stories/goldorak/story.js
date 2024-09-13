@@ -30,6 +30,6 @@ var story = {
     },
     tools: [
         { picture: "pince.png" },
-        { picture: "pelle.png" },
+        { picture: "pelle.png" }
     ]
 }

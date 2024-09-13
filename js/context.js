@@ -8,15 +8,18 @@ class Context {
         this.playgrounds = []
         this.tools = []
         fetch("stories/" + base_dir + "/story.js")
-            .then(res => { res.text().then(story => { eval(story) }) })
-        for(let i = 0; i < story.playgrounds.number; i++) {
-            this.add_playground()
-            this.load_background(i, story, story.playgrounds.start_poses[i])
-        }
-        for(let i = 0; i < story.tools.length; i++) {
-            this.add_tool(story.tools[i].picture)
-        }
-        this.story = story
+            .then(res => { res.text()
+            .then(txt => { 
+                (0, eval)(txt)
+                for(let i = 0; i < story.playgrounds.number; i++) {
+                    this.add_playground()
+                    this.load_background(i, story, story.playgrounds.start_poses[i])
+                }
+                for(let i = 0; i < story.tools.length; i++) {
+                    this.add_tool(story.tools[i].picture)
+                }
+                this.story = story
+            })})
     }
 
     get_story() {
