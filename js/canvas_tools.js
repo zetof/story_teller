@@ -43,7 +43,7 @@ class CanvasTools {
         if(this.tool) {
             this.mouse_x = e.clientX
             this.mouse_y = e.clientY
-            if(this.tool.mouse_down(e.clientX - this.c_x,  e.clientY - this.c_y)) this.display(true)
+            if(this.tool.mouse_down(e.offsetX, e.offsetY)) this.display(true)
         }
     }
 
@@ -80,7 +80,7 @@ class CanvasTools {
             this.mouse_x = e.clientX
             this.mouse_y = e.clientY
             this.canvas.style.cursor = "none"
-            this.tool.mouse_over(e.clientX - this.c_x,  e.clientY - this.c_y)
+            this.tool.mouse_over(e.offsetX, e.offsetY)
         }
     }
 
