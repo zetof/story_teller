@@ -1,7 +1,7 @@
 class Context {
     constructor(story) {
         this.story = null
-        this.tool = null
+        this.active_tool = null
     }
 
     load_story(base_dir) {
@@ -28,7 +28,7 @@ class Context {
 
     add_playground() {
         let index = this.playgrounds.length + 1
-        const playground = new Playground("playground_" + index.toString())
+        const playground = new Playground("playground_" + index.toString(), this.assign_tool.bind(this))
         this.playgrounds.push(playground)
     }
 
@@ -38,7 +38,16 @@ class Context {
 
     add_tool(picture) {
         let index = this.tools.length + 1
-        const tool = new Tool(picture)
+        const tool = new Tool(picture, this.activate_tool.bind(this))
         this.tools.push(tool)
+    }
+
+    activate_tool(tool) {
+        for(let i = 0; i < this.tools.length; i++) this.tools[i].deactivate()
+        this.active_tool = tool
+    }
+
+    assign_tool(tool) {
+        return this.active_tool
     }
 }

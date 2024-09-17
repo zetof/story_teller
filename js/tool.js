@@ -1,12 +1,11 @@
 class Tool {
-	constructor(src) {
+	constructor(src, activate_callback) {
 		let tools = document.getElementById("tools") 
 		this.tool = document.createElement("img")
 		this.tool.src = "css/cursors/" + src
 		this.tool.classList.add("tool")
 		tools.appendChild(this.tool)
-		this.unique = this.tool.classList.contains("unique")?true:false
-		this.type = this.tool.classList.contains("eraser")?"eraser":"stamp"
+		this.activate_callback = activate_callback
 		this.active = false
 		this.x = 0
 		this.y = 0
@@ -18,6 +17,10 @@ class Tool {
 		this.tool.addEventListener("click", this.activate.bind(this))
 		this.tool.addEventListener("load", this.set_dimensions.bind(this))
 	}
+
+    get_dom() {
+    	return this.tool
+    }
 
 	get_coordinates() {
 		return { x: this.x, y: this.y, prev_x: this.prev_x, prev_y: this.prev_y }
@@ -54,12 +57,11 @@ class Tool {
 	}
 
 	activate() {
-		this.active = true
+		this.activate_callback(this)
 		this.tool.style.border = "2px solid white"
 	}
 
 	deactivate() {
-		this.active = false
 		this.tool.style.border = "2px solid transparent"
 	}	
 

@@ -1,16 +1,16 @@
 class CanvasTools {
-    constructor(canvas_name, background_canvas) {
+    constructor(canvas_name, background_canvas, set_tool_callback) {
         this.canvas = document.getElementById(canvas_name)
         this.context = this.canvas.getContext("2d")
         this.context.globalAlpha = 1
         this.background_canvas = background_canvas
+        this.set_tool_callback = set_tool_callback
         this.tools = [] 
         const dim = this.canvas.getBoundingClientRect()
         this.c_x = Math.round(dim.left)
         this.c_y = Math.round(dim.top)
         this.canvas.width = Math.round(dim.width)
         this.canvas.height = Math.round(dim.height)
-        this.active = false
         this.key = null
         this.saved_buffer = null
         this.canvas.addEventListener("mousedown", this.mouse_down.bind(this))
@@ -30,17 +30,9 @@ class CanvasTools {
         this.saved_buffer = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
         this.context.translate(c.x + g.width / 2, c.y + g.height / 2);
         this.context.rotate(g.angle);
-        this.context.drawImage(this.tool.image, 0, 0, g.o_width, g.o_height, -g.width / 2, -g.height / 2, g.width, g.height)
+        this.context.drawImage(this.tool.tool, 0, 0, g.o_width, g.o_height, -g.width / 2, -g.height / 2, g.width, g.height)
         this.context.rotate(-g.angle);
         this.context.translate(-c.x - g.width / 2, -c.y - g.height / 2);
-    }
-
-    activate_tool(tool) {
-        this.tool = tool
-    }
-
-    deactivate_tool(tool) {
-        this.tool = null
     }
 
     key_pressed(key) {
@@ -48,7 +40,7 @@ class CanvasTools {
     }
 
     mouse_down(e) {
-        if(this.tool && this.tool.is_active()) {
+        if(this.tool) {
             this.mouse_x = e.clientX
             this.mouse_y = e.clientY
             if(this.tool.mouse_down(e.clientX - this.c_x,  e.clientY - this.c_y)) this.display(true)
@@ -56,7 +48,7 @@ class CanvasTools {
     }
 
     mouse_wheel(e) {
-        if(this.tool && this.tool.is_active()) {
+        if(this.tool) {
             if(this.key == 16) this.tool.change_angle(e.deltaY / 1200)
             else this.tool.change_zoom(e.deltaY / 1200)
             this.display()
@@ -64,7 +56,7 @@ class CanvasTools {
     }
 
     mouse_move(e) {
-        if(this.tool && this.tool.is_active()) {
+        if(this.tool) {
             this.tool.mouse_move(this.mouse_x - e.clientX,  this.mouse_y - e.clientY)
             this.mouse_x = e.clientX
             this.mouse_y = e.clientY
@@ -73,16 +65,17 @@ class CanvasTools {
     }
 
     mouse_out(e) {
-        if(this.tool && this.tool.is_active()) {
+        if(this.tool) {
             this.canvas.blur()
             if(this.saved_buffer) this.context.putImageData(this.saved_buffer, 0, 0);
-            this.tool.deactivate()
+            this.tool = null
         }
     }
 
     mouse_over(e) {
-        console.log(this.canvas)
-        if(this.tool && this.tool.is_active()) {
+        this.tool = this.set_tool_callback()
+        console.log(this.tool)
+        if(this.tool) {
             this.canvas.focus()
             this.mouse_x = e.clientX
             this.mouse_y = e.clientY

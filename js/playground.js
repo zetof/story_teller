@@ -1,5 +1,5 @@
 class Playground {
-    constructor(name) {
+    constructor(name, set_tool_callback) {
         let playgrounds = document.getElementById("playgrounds")
         let playground = document.createElement("div")
         let background = document.createElement("canvas")
@@ -14,7 +14,7 @@ class Playground {
         playground.appendChild(background)
         playground.appendChild(tools)
         this.background = new CanvasBackground(name + "_background")
-        this.tools = new CanvasTools(name + "_tools", this.background)
+        this.tools = new CanvasTools(name + "_tools", this.background, set_tool_callback)
     }
 
     load_background(character, index) {
