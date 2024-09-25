@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 app.use("/js", express.static(__dirname + "/js"));
 app.use("/css", express.static(__dirname + "/css"));
 app.use("/stories", express.static(__dirname + "/stories"));
+app.use("/prompts", express.static(__dirname + "/prompts"));
 
 // Start web server for frontend application
 app.listen(web_app_port, () => console.log(`Your server is available on port ${web_app_port}`));

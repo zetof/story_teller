@@ -2,6 +2,7 @@ class Context {
     constructor(story) {
         this.story = null
         this.active_tool = null
+        this.sentence = null
     }
 
     load_story(base_dir) {
@@ -48,6 +49,15 @@ class Context {
     }
 
     assign_tool(tool) {
+        this.play_sentence()
         return this.active_tool
+    }
+
+    load_sentence(base_die, prompts) {
+        this.sentence = new Sentence("prompts", prompts)
+    }
+
+    play_sentence() {
+        this.sentence.play()
     }
 }

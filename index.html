@@ -9,6 +9,7 @@
   <script src="js/canvas_background.js"></script>
   <script src="js/canvas_tools.js"></script>
   <script src="js/tool.js"></script>
+  <script src="js/sentence.js"></script>
   <script src="stories/stories.js"></script>
 </head>
 <body>
@@ -24,6 +25,7 @@
         base_dir = params.has("base_dir")?params.get("base_dir"):"goldorak"
         var context = new Context()
         context.load_story(base_dir)
+        context.load_sentence("prompts", ["order01", "order02", "order03", "s01"])
     </script>
 </body>
 </html>

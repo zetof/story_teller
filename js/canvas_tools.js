@@ -1,7 +1,7 @@
 class CanvasTools {
     constructor(canvas_name, background_canvas, set_tool_callback) {
         this.canvas = document.getElementById(canvas_name)
-        this.context = this.canvas.getContext("2d")
+        this.context = this.canvas.getContext("2d", { willReadFrequently: true })
         this.context.globalAlpha = 1
         this.background_canvas = background_canvas
         this.set_tool_callback = set_tool_callback
@@ -74,7 +74,6 @@ class CanvasTools {
 
     mouse_over(e) {
         this.tool = this.set_tool_callback()
-        console.log(this.tool)
         if(this.tool) {
             this.canvas.focus()
             this.mouse_x = e.clientX

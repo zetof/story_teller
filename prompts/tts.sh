@@ -1,3 +1,2 @@
 #!/bin/bash
-pico2wave -l fr-FR -w $1.wav < $1.txt
-aplay test.wav
+mimic3 --voice 'fr_FR/m-ailabs_low#ezwa'  --noise-scale .1 --noise-w .1 --length-scale 1.1 --output-dir . --csv < $1.txt

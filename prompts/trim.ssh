@@ -1,0 +1,6 @@
+#!/bin/bash
+rm -rf *.mp3
+for filename in ./*.wav; do
+  ffmpeg -i "$filename" -af silenceremove=start_periods=1:stop_periods=1:detection=peak "${filename%.wav}.mp3"
+done
+rm -rf *.wav
