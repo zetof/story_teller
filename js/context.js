@@ -17,7 +17,7 @@ class Context {
                     this.load_background(i, story, story.playgrounds.start_poses[i])
                 }
                 for(let i = 0; i < story.tools.length; i++) {
-                    this.add_tool(story.tools[i].picture)
+                    this.add_tool(story.tools[i])
                 }
                 this.story = story
             })})
@@ -37,9 +37,9 @@ class Context {
         this.playgrounds[playground].load_background(character, index)
     }
 
-    add_tool(picture) {
+    add_tool(tool) {
         let index = this.tools.length + 1
-        const tool = new Tool(picture, this.activate_tool.bind(this))
+        var tool = new Tool(tool, this.activate_tool.bind(this))
         this.tools.push(tool)
     }
 
@@ -49,15 +49,6 @@ class Context {
     }
 
     assign_tool(tool) {
-        this.play_sentence()
         return this.active_tool
-    }
-
-    load_sentence(base_die, prompts) {
-        this.sentence = new Sentence("prompts", prompts)
-    }
-
-    play_sentence() {
-        this.sentence.play()
     }
 }

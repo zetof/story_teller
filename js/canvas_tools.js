@@ -27,12 +27,13 @@ class CanvasTools {
         var g = this.tool.get_geometry()
         if(!permanent && this.saved_buffer) this.context.putImageData(this.saved_buffer, 0, 0);
         else this.saved_buffer = null
-        this.saved_buffer = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        this.saved_buffer = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height)
+        this.context.save()
         this.context.translate(c.x + g.width / 2, c.y + g.height / 2);
+        this.context.scale(g.symmetry, 1)
         this.context.rotate(g.angle);
         this.context.drawImage(this.tool.tool, 0, 0, g.o_width, g.o_height, -g.width / 2, -g.height / 2, g.width, g.height)
-        this.context.rotate(-g.angle);
-        this.context.translate(-c.x - g.width / 2, -c.y - g.height / 2);
+        this.context.restore()
     }
 
     key_pressed(key) {
@@ -41,9 +42,15 @@ class CanvasTools {
 
     mouse_down(e) {
         if(this.tool) {
-            this.mouse_x = e.clientX
-            this.mouse_y = e.clientY
-            if(this.tool.mouse_down(e.offsetX, e.offsetY)) this.display(true)
+            if(this.key == 16) {
+                this.tool.change_symmetry()
+                this.display()
+            }
+            else {
+                this.mouse_x = e.clientX
+                this.mouse_y = e.clientY
+                if(this.tool.mouse_down(e.offsetX, e.offsetY)) this.display(true)
+            }
         }
     }
 

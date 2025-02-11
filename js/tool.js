@@ -1,11 +1,13 @@
 class Tool {
-	constructor(src, activate_callback) {
+	constructor(tool, activate_callback) {
 		let tools = document.getElementById("tools") 
 		this.tool = document.createElement("img")
-		this.tool.src = "css/cursors/" + src
+		this.tool.src = "css/cursors/" + tool.picture
 		this.tool.classList.add("tool")
 		tools.appendChild(this.tool)
 		this.activate_callback = activate_callback
+		this.prompt_activate = new Prompt(tool.on_activate)
+		this.prompt_click = new Prompt(tool.on_click)
 		this.active = false
 		this.x = 0
 		this.y = 0
@@ -13,7 +15,7 @@ class Tool {
 		this.prev_y = 0
 		this.zoom = .25
 		this.angle = 0
-		this.occurence = 0
+		this.symmetry = 1
 		this.tool.addEventListener("click", this.activate.bind(this))
 		this.tool.addEventListener("load", this.set_dimensions.bind(this))
 	}
@@ -27,7 +29,7 @@ class Tool {
 	}
 
 	get_geometry() {
-		return { width: this.zoom * this.width, height: this.zoom * this.height, o_width: this.width, o_height: this.height, angle: this.angle * Math.PI / 180 }
+		return { width: this.zoom * this.width, height: this.zoom * this.height, o_width: this.width, o_height: this.height, angle: this.angle * Math.PI / 180, symmetry: this.symmetry }
 	}
 
 	is_active() {
@@ -40,6 +42,10 @@ class Tool {
 		this.zoom -= inc / 10
 		if(this.zoom < .1) this.zoom = .1
 		if(this.zoom > 1) this.zoom = 1
+	}
+
+	change_symmetry() {
+		this.symmetry = -this.symmetry
 	}
 
 	set_dimensions() {
@@ -59,6 +65,7 @@ class Tool {
 	activate() {
 		this.activate_callback(this)
 		this.tool.style.border = "2px solid white"
+		this.prompt_activate.play()
 	}
 
 	deactivate() {
@@ -66,13 +73,11 @@ class Tool {
 	}	
 
 	mouse_down(x, y) {
-		if(this.unique && this.occurence > 0) return false
-		else {
-			this.x = x - this.zoom * this.width / 2
-			this.y = y - this.zoom * this.height / 2
-			this.occurence += 1
-			return true
-		}
+		this.x = x - this.zoom * this.width / 2
+		this.y = y - this.zoom * this.height / 2
+		this.occurence += 1
+		this.prompt_click.play()
+		return true
 	}
 
 	mouse_move(dx, dy) {
